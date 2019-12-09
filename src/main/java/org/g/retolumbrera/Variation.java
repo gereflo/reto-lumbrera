@@ -6,7 +6,7 @@ import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-@Entity
+//@Entity
 public class Variation extends PanacheEntity{
 
     public int id;

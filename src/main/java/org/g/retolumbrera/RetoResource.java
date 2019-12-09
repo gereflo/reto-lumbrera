@@ -7,6 +7,8 @@ import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import java.io.IOException;
 import java.util.*;
 
+import javax.persistence.TableGenerator;
+import javax.transaction.Transactional;
 import javax.validation.constraints.Null;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -24,7 +26,8 @@ public class RetoResource {
     private Set<Product> products = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
 
     public RetoResource() {
-/*        companies.add(new Companie(0, "Bimbo"));
+        //Data for test
+/*      companies.add(new Companie(0, "Bimbo"));
         companies.add(new Companie(1, "Sabritas"));
         idCompanie = companies.size();
 
@@ -59,6 +62,7 @@ public class RetoResource {
 
     //Add a companie in the list via Json Post
     @POST
+    @Transactional
     @Produces("application/json")
     //@Produces(MediaType.TEXT_PLAIN)
     @Path("/addCompanie/")
@@ -80,8 +84,9 @@ public class RetoResource {
         }
     }
 
-    //add a companie in the list via get
+    //Add a companie to the list via get
     @GET
+    @Transactional
     @Produces("application/json")
     //@Produces(MediaType.TEXT_PLAIN)
     @Path("/addCompanie/{companie}")
@@ -96,6 +101,8 @@ public class RetoResource {
     }
 
 //----------------Products functions---------------
+
+    //Return all the products in the list
     @GET
     @Produces("application/json")
     @Path("/getProducts")
@@ -106,7 +113,9 @@ public class RetoResource {
 
     }
 
-    @POST //Falta validar sku
+    //Add a product to the list via @POST
+    @POST
+    @Transactional
     @Path("/addProduct")
     public String add(String product) {
         int flag = 0;
@@ -138,7 +147,7 @@ public class RetoResource {
                                 if(stock > 0){
                                     System.out.println("    Stock de " + stock);
                                     boolean sku = findsku(temp2.sku);
-                                    if(sku == false){
+                                    if(!sku){
                                         flag = 1;
                                     }
                                     else {
@@ -171,7 +180,9 @@ public class RetoResource {
         }
     }
 
-    @POST//Falta validar sku
+    //Update a product to the list via @POST
+    @POST
+    @Transactional
     @Path("/updateProduct")
     public String update(String product) throws JsonProcessingException {
 
@@ -197,8 +208,8 @@ public class RetoResource {
             for (Product old : products) {
                 if (old.id == idNew) {
                     System.out.println("Producto encontrado");
-                    Boolean findCompanie = findCompanie(newObj.companies_id);
-                    if (findCompanie == true){
+                    boolean findCompanie = findCompanie(newObj.companies_id);
+                    if (findCompanie){
                         //System.out.println(temp.id + " comparar " + newObj.companies_id);
                         System.out.println("Companhia existente");
                         delete = old;
@@ -240,13 +251,14 @@ public class RetoResource {
         if(flag == 1){
             drop(id);
             products.add(new Product(id,name, stock,cost,price,has_iva, companie_id, var));
-            String show = product_list_show();
-            return show;
+            return product_list_show();
         }
         return "Companhia no encontrada";
     }
 
+    //Delete a product whith the id given.
     @GET
+    @Transactional
     @Path("/dropProduct/{idProduct}")
     public String drop(@PathParam int idProduct) throws JsonProcessingException {
 
@@ -269,22 +281,28 @@ public class RetoResource {
         return(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(products));
     }
 
+
+    //----------------Useful functions to validate-----------
+
     @GET
     @Path("/test/{id}")
     public String find(@PathParam String id){
-        System.out.println("busqueda de sku");
+
+        String name = "sku";
+        System.out.println("busqueda de " + name);
 
         boolean b = findsku(id);
 
         if (b == true){
-            return ("sku encontrado");
+            return (name + "encontrado");
         }
         else{
             return ("no se encontro nada");
         }
     }
 
-    //Funcion que busca si un id de una compañia existe
+
+    //This function search an id of the company given and if exist return "True"
     public boolean findCompanie(int idCompanie){
 
         boolean flag = false;
@@ -299,7 +317,7 @@ public class RetoResource {
         return flag;
     }
 
-
+    //This function search an sku given and if exist return "True"
     public boolean findsku(String sku){
 
         boolean flag = false;
@@ -319,6 +337,7 @@ public class RetoResource {
         return flag;
     }
 
+    //This function search an product id given and if exist return "True"
     public boolean findProduct(int idProduct){
 
         boolean flag = false;

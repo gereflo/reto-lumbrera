@@ -7,7 +7,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 
-@Entity
+//@Entity
 public class Product extends PanacheEntity {
 
     public int id;
@@ -22,7 +22,7 @@ public class Product extends PanacheEntity {
     public int companies_id;
     //public int companies_id;
 
-    @OneToMany(mappedBy = "Product_id", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    //@OneToMany(mappedBy = "Product_id", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     public Set<Variation> variations;
 
     public Product() {

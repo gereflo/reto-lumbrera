@@ -77,6 +77,16 @@ quarkus.hibernate-orm.database.generation=create
 quarkus.datasource.url = jdbc:mysql://localhost:3308/prueba?serverTimezone=UTC
 ```
 
+7.- Se trabajo con Panache para el manejo de base de datos (¿Se puede hacer de otra forma?, no encontre como), pero no logre la persistencia 
+en la base de datos.
+
+Al establecer las llaves foraneas "@ManyToOne" y "@OneToMany" en sus respectivas classes lanza este error.
+```
+HHH000318: Could not find any META-INF/persistence.xml file in the classpath
+```
+No halle una solucion 
+
+
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running

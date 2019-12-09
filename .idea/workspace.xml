@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc1f1263-ea9b-45a2-a4d1-1c2e1b27396c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/g/retolumbrera/Companie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/g/retolumbrera/Companie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/g/retolumbrera/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/g/retolumbrera/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/g/retolumbrera/RetoResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/g/retolumbrera/RetoResource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/g/retolumbrera/Variation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/g/retolumbrera/Variation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/reto-lumbrera-dev.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/reto-lumbrera-dev.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
