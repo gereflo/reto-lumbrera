@@ -1,17 +1,80 @@
 # Project Title
 
-One Paragraph of project description goes here
+Pequeña prueba para Lumbrera
 
-## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+### Problemas
 
-### Prerequisites
-
-What things you need to install the software and how to install them
+Se enumeran los problemas al relizar el proyecto.
+1.- En el "Getting Started" indica que para crear un nuevo proyecto se debe de iniciar de la siguiente manera:
 
 ```
-Give examples
+mvn io.quarkus:quarkus-maven-plugin:1.0.1.Final:create \
+    -DprojectGroupId=org.acme \
+    -DprojectArtifactId=getting-started \
+    -DclassName="org.acme.quickstart.GreetingResource" \
+    -Dpath="/hello"
+cd getting-started
+
+```
+Sin embargo lanza error en el OS Windows, para este sistema se cambian las "/" por "^"
+```
+mvn io.quarkus:quarkus-maven-plugin:1.0.1.Final:create ^
+    -DprojectGroupId=org.acme ^
+    -DprojectArtifactId=getting-started ^
+    -DclassName="org.acme.quickstart.GreetingResource" ^
+    -Dpath="/hello"
+cd getting-started
+```
+
+2.- En el Json dado como ejemplo para "productos" no se incluye ningun id o nombre de compañia, por lo que no es posible validar 
+como se pide en el punto 3 "3. Validar que el id de la compañía se encuentre dado de alta.". 
+Se decide agregar al Json un id de compañia para que se pueda validar, de no tenerlo se indica.
+
+3.- En el documento no se indica como deben recibirse los datos por lo que para compañia es posible hacerlos via @GET
+
+```
+http://localhost:8080/Reto/addCompanie/"Nueva_companhia"
+```
+Mientras que para productos se hace via @POST, esto da problemas ya que en --data hay que escapar los textos que se envien con """".
+Esto parece slo afectar al OS Windows.
+```
+curl --header "Content-Type: application/json" ^
+  --request POST ^
+  --data {"""id""":0,"""name""":"""ttttttttt"""  ...} ^
+  http://localhost:8080/Reto/addProduct 
+```
+
+Otra solucion mas comoda es mandar el post via archivo, de esta manera no es necesario escapar los textos.
+```
+curl --header "Content-Type: application/json" ^
+  --request POST ^
+  --data @producto.json ^
+  http://localhost:8080/Reto/addProduct 
+  
+```
+4.-Para el poder hacer update e deben de mandar los datos completos no solo el nombre, esto para poder hacer las validaciones pedidas.
+ - Validar que el stock sea mayor a 0.
+ - Validar que el costo del producto sea menor al precio.
+ - Validar que el id de la compañía se encuentre dado de alta.
+ - Puede o no tener variaciones el producto, en el caso de tener
+	variaciones, válida que el sku de la variación no exista en otro
+	producto y que el stock sea mayor a 0.
+
+
+5.-Para la conexcion a la base de datos el driver SQL debe de ser:
+```
+com.mysql.cj.jdbc.Driver
+```
+
+Ademas se debe etablecer como solo "create" ya que causa problemas con "drop and create", pero hay que borrar la base de datos manualmente
+```
+quarkus.hibernate-orm.database.generation=create
+```
+
+6.- Se debe establecer una zona horaria de la siguiente manera "?serverTimezone=UTC" ya que de otra manera causa error:
+```
+quarkus.datasource.url = jdbc:mysql://localhost:3308/prueba?serverTimezone=UTC
 ```
 
 ### Installing
@@ -32,13 +95,6 @@ until finished
 
 End with an example of getting some data out of the system or using it for a little demo
 
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
 
 ```
 Give an example
@@ -52,36 +108,7 @@ Explain what these tests test and why
 Give an example
 ```
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
 ## Authors
 
 * **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc

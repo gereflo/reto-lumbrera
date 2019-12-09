@@ -1,7 +1,10 @@
 package org.g.retolumbrera;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Variation extends PanacheEntity{
@@ -11,12 +14,15 @@ public class Variation extends PanacheEntity{
     public String brand;
     public String sku;
     public int stock;
-    public int Products_id;
+    //public int Products_id;
+    @ManyToOne
+    @JsonbTransient
+    public Product product;
 
     public Variation() {
     }
 
-    public Variation(int id, String name, String brand, String sku, int stock, int products_id) {
+    /*public Variation(int id, String name, String brand, String sku, int stock, int products_id) {
         this.id = id;
         this.name = name;
         this.brand = brand;
@@ -38,5 +44,5 @@ public class Variation extends PanacheEntity{
         this.brand = brand;
         this.sku = sku;
         this.stock = stock;
-    }
+    }*/
 }

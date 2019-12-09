@@ -1,8 +1,11 @@
 package org.g.retolumbrera;
 
+import java.util.List;
 import java.util.Set;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import javax.persistence.Entity;
+
+import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.*;
 
 @Entity
 public class Product extends PanacheEntity {
@@ -13,7 +16,13 @@ public class Product extends PanacheEntity {
     public double cost;
     public double price;
     public boolean has_iva;
+
+    @ManyToOne
+    @JsonbTransient
     public int companies_id;
+    //public int companies_id;
+
+    @OneToMany(mappedBy = "Product_id", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     public Set<Variation> variations;
 
     public Product() {
@@ -65,7 +74,7 @@ public class Product extends PanacheEntity {
         this.cost = cost;
         this.price = price;
         this.has_iva = has_iva;
-        this.companies_id = companies_id;
+        //this.companies_id = companies_id;
     }
 
     public Product(int id, String name, int stock, double cost, double price, boolean has_iva, int companies_id, Set<Variation> variation) {
